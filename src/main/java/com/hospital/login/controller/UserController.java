@@ -1,9 +1,7 @@
 package com.hospital.login.controller;
 
 import com.hospital.login.entity.Response;
-import com.hospital.login.entity.dto.UserDto;
-import com.hospital.login.entity.dto.UserJoinRequest;
-import com.hospital.login.entity.dto.UserJoinResponse;
+import com.hospital.login.entity.dto.*;
 import com.hospital.login.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,5 +26,11 @@ public class UserController {
         log.info("name : {}   password : {}",userJoinRequest.getUserName(), userJoinRequest.getPassword());
         UserDto userDto = userService.join(userJoinRequest);
         return Response.success(new UserJoinResponse(userDto.getUserName(),userDto.getPassword(),userDto.getEmailAddress()));
+    }
+
+    @PostMapping("/login")
+    public Response<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
+        String token = userService.login(userLoginRequest.getUserName(), userLoginRequest.getPassword());
+        return Response.success(new UserLoginResponse(token));
     }
 }

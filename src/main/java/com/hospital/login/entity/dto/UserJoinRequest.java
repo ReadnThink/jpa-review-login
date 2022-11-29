@@ -14,10 +14,10 @@ public class UserJoinRequest {
     private String password;
     private String email;
 
-    public User toEntity() {
+    public User toEntity(String password) { //password를 받아서 넣는다.
         return User.builder()
                 .userName(this.getUserName())
-                .password(this.password)
+                .password(password)
                 .emailAddress(this.email)
                 .build();
     }
